@@ -6,10 +6,8 @@ from flask import Flask, request, render_template
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'static/uploads'
 
-# Set Tesseract executable path
 pytesseract.pytesseract.tesseract_cmd = r"C:/Program Files/Tesseract-OCR/tesseract.exe"
 
-# Language map for Tesseract
 LANGUAGES = {
     'english': 'eng',
     'arabic': 'ara',
@@ -19,7 +17,6 @@ LANGUAGES = {
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-        # Check if an image is uploaded
         if 'image' not in request.files:
             return "No file part"
         
@@ -30,11 +27,9 @@ def index():
             return "No selected file"
         
         if file and language in LANGUAGES:
-            # Save the uploaded file
             filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
             file.save(filepath)
             
-            # Load the image and perform OCR with the selected language
             img = cv2.imread(filepath)
             text = pytesseract.image_to_string(img, lang=LANGUAGES[language])
             
