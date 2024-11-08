@@ -1,0 +1,3 @@
+pytesseract
+cv2
+flask
