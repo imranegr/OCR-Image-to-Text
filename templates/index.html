@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCR Image to Text</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/ocr.png') }}" type="image/png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>OCR Image to Text</h1>
+        <form action="/" method="POST" enctype="multipart/form-data">
+            <label for="language">Select Language:</label>
+            <select name="language" id="language" required>
+                <option value="english" {% if language == 'english' %}selected{% endif %}>English</option>
+                <option value="arabic" {% if language == 'arabic' %}selected{% endif %}>Arabic</option>
+                <option value="french" {% if language == 'french' %}selected{% endif %}>French</option>
+            </select>
+            <input type="file" name="image" accept="image/*" required>
+            <button type="submit">Upload and Convert</button>
+        </form>
+        
+        {% if img_path %}
+            <div class="result-section">
+                <h2>Uploaded Image:</h2>
+                <img src="{{ img_path }}" alt="Uploaded Image">
+            </div>
+        {% endif %}
+        
+        {% if text %}
+            <div class="result-section">
+                <h2>Extracted Text:</h2>
+                <p>{{ text }}</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
